@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important} body{margin:0} img{max-width:100%}</style>
+<title>バトロワ 参加ガイド</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a field manual for one match - sticky section bar, a square "safe zone" hero that shrinks like the real one,
+   then reference sections (install steps, controls, key cleanup, roles, items, bosses) in a single 1080px column. */
+:root {
+  --bg: #eef1f3;
+  --surface: #ffffff;
+  --sunken: #e3e8ec;
+  --ink: #15202b;
+  --muted: #586675;
+  --line: #d2d9df;
+  --zone: #d6402a;
+  --zone-soft: #f6ddd8;
+  --signal: #c98a0c;
+  --ok: #2c7a4b;
+  --kbd: #1d2a36;
+  --kbd-ink: #f3f6f8;
+  --display: "Dela Gothic One", "Hiragino Kaku Gothic StdN", "Yu Gothic", sans-serif;
+  --body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f151b; --surface: #17202a; --sunken: #1d2833; --ink: #e5ecf2; --muted: #95a3b0; --line: #2a3643;
+    --zone: #ff6a4f; --zone-soft: #3a1f1b; --signal: #f0b43c; --ok: #5cc28a; --kbd: #e5ecf2; --kbd-ink: #0f151b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f151b; --surface: #17202a; --sunken: #1d2833; --ink: #e5ecf2; --muted: #95a3b0; --line: #2a3643;
+  --zone: #ff6a4f; --zone-soft: #3a1f1b; --signal: #f0b43c; --ok: #5cc28a; --kbd: #e5ecf2; --kbd-ink: #0f151b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; }
+section > p, .note { max-width: 100%; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+a { color: var(--zone); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 4vw, 34px); line-height: 1.25; }
+h3 { font-size: 17px; font-weight: 700; line-height: 1.4; }
+p { margin: 0; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+kbd { font-family: var(--mono); font-size: 12.5px; font-weight: 700; background: var(--kbd); color: var(--kbd-ink); border-radius: 5px; padding: 1px 7px; white-space: nowrap; display: inline-block; line-height: 1.6; }
+code { font-family: var(--mono); font-size: 13px; background: var(--sunken); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--zone); font-weight: 700; }
+.muted { color: var(--muted); }
+
+/* nav */
+nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+nav.bar .wrap { display: flex; align-items: center; gap: 18px; padding-block: 10px; }
+.brand { font-family: var(--display); font-size: 19px; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.brand i { width: 14px; height: 14px; border: 2.5px solid var(--zone); display: inline-block; }
+.links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.links::-webkit-scrollbar { display: none; }
+.links a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: 14px; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+.links a:hover, .links a:focus-visible { color: var(--ink); background: var(--sunken); outline: none; }
+
+/* hero */
+.hero { padding-block: 48px 40px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(56px, 10vw, 104px); line-height: 1; letter-spacing: .02em; }
+.hero .lead { font-size: 17px; margin-top: 18px; max-width: 34em; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 26px; }
+.facts div { display: flex; flex-direction: column; }
+.facts b { font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.facts span { font-size: 12.5px; color: var(--muted); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font-weight: 700; text-decoration: none; border: 2px solid var(--ink); color: var(--ink); background: transparent; }
+.btn.primary { background: var(--zone); border-color: var(--zone); color: #fff; }
+.btn:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.zonebox { position: relative; aspect-ratio: 1; width: 100%; max-width: 420px; justify-self: center; }
+.zonebox svg { width: 100%; height: 100%; display: block; }
+.zonebox .lbl { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .shrink { animation: shrink 9s ease-in-out infinite; transform-origin: 50% 50%; transform-box: fill-box; }
+  @keyframes shrink { 0%, 8% { transform: scale(1); } 55%, 70% { transform: scale(.17); } 100% { transform: scale(1); } }
+}
+
+section { padding-block: 64px 8px; scroll-margin-top: 60px; }
+.sec-head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; max-width: 46em; }
+.sec-head p { color: var(--muted); }
+
+/* generic grids */
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.panel ul { margin: 0; padding-left: 1.2em; }
+.panel li + li { margin-top: 4px; }
+
+/* match flow */
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.flow > div { padding: 16px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.flow > div:last-child { border-right: 0; }
+.flow b { font-family: var(--mono); font-size: 12px; color: var(--zone); letter-spacing: .08em; }
+.flow h3 { font-size: 15.5px; }
+.flow p { font-size: 13.5px; color: var(--muted); }
+.tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12.5px; color: var(--muted); font-weight: 700; background: var(--sunken); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap; }
+
+/* install steps */
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; counter-reset: st; }
+.steps > li { counter-increment: st; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.steps > li::before { content: counter(st); font-family: var(--display); font-size: 22px; width: 40px; height: 40px; border: 2.5px solid var(--zone); color: var(--zone); display: grid; place-items: center; }
+.steps .body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.steps ul { margin: 0; padding-left: 1.2em; }
+.dl { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); margin-top: 4px; }
+.dl a, .dl span.off { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 8px; border: 2px solid var(--zone); text-decoration: none; color: var(--ink); background: var(--zone-soft); }
+.dl a b, .dl span.off b { font-size: 15px; }
+.dl a small, .dl span.off small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.dl span.off { border-style: dashed; border-color: var(--line); background: var(--sunken); }
+.dl a:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.note { border-left: 3px solid var(--signal); padding: 6px 12px; background: var(--sunken); border-radius: 0 6px 6px 0; font-size: 14px; }
+.mem { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mem div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--bg); }
+.mem b { font-family: var(--mono); font-size: 18px; display: block; }
+.mem span { font-size: 12.5px; color: var(--muted); }
+.path { font-family: var(--mono); font-size: 13px; background: var(--sunken); border-radius: 6px; padding: 8px 10px; overflow-x: auto; white-space: nowrap; }
+
+/* keys */
+.act { font-weight: 700; white-space: nowrap; }
+.act.off { color: var(--zone); }
+.act.keep { color: var(--ok); }
+.act.chg { color: var(--signal); }
+
+/* cards with images (roles, items, bosses) */
+.cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+.card { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; align-items: start; }
+.pic { width: 72px; height: 72px; border-radius: 8px; background: var(--sunken); display: grid; place-items: center; overflow: hidden; }
+.pic img { width: 100%; height: 100%; object-fit: contain; }
+.pic img.px { image-rendering: pixelated; width: 64px; height: 64px; }
+.ph { font-size: 10.5px; color: var(--muted); text-align: center; line-height: 1.35; padding: 4px; overflow-wrap: anywhere; }
+.card .txt { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.card .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; min-width: 0; }
+.card .top h3 { min-width: 0; overflow-wrap: anywhere; }
+.tag { font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--sunken); color: var(--muted); white-space: nowrap; }
+.card p { font-size: 13.5px; }
+.get { font-size: 12.5px; color: var(--muted); }
+.get b { color: var(--ink); font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.chips button { font: inherit; font-size: 13.5px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chips button:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.search { font: inherit; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); min-width: 0; flex: 1 1 180px; max-width: 280px; }
+.role .pic { border: 2px solid var(--rc, var(--line)); }
+.boss { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.boss .pic { width: 100%; height: auto; aspect-ratio: 1; }
+.boss .pic img { width: 100%; height: 100%; }
+.boss h3 { font-family: var(--display); font-weight: 400; font-size: 28px; }
+.boss dl { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 6px 12px; margin: 6px 0 0; font-size: 14px; }
+.boss dt { color: var(--muted); font-weight: 700; }
+.boss dd { margin: 0; }
+.bosses { display: flex; flex-direction: column; gap: 14px; }
+/* crafting */
+.howto { display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); counter-reset: hw; }
+.howto > div { counter-increment: hw; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.howto > div::before { content: "STEP " counter(hw); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--zone); }
+.howto p { font-size: 14px; }
+.coords { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.coords code { font-size: 12.5px; }
+.rgroup { margin-top: 30px; }
+.rgroup > h3 { font-family: var(--display); font-weight: 400; font-size: 21px; margin-bottom: 12px; }
+.recipes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+.recipe { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.eq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ing { display: inline-flex; align-items: center; gap: 6px; background: var(--sunken); border-radius: 8px; padding: 4px 9px 4px 4px; font-size: 13px; font-weight: 700; min-width: 0; max-width: 100%; }
+.ing.noimg { padding-left: 9px; }
+.ing img { width: 28px; height: 28px; image-rendering: pixelated; flex: none; }
+.ing span { min-width: 0; overflow-wrap: anywhere; }
+.ing em { font-style: normal; font-family: var(--mono); color: var(--zone); }
+.eq .op { font-family: var(--mono); font-weight: 700; color: var(--muted); }
+.eq .arrow { font-family: var(--mono); font-weight: 700; color: var(--zone); font-size: 18px; }
+.ing.out { background: var(--zone-soft); outline: 1.5px solid var(--zone); }
+.recipe p { font-size: 13.5px; color: var(--muted); }
+.chain { display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; }
+.chain b { color: var(--ink); }
+footer { padding-block: 56px 40px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .howto { grid-template-columns: minmax(0, 1fr); }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .zonebox { max-width: 300px; }
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .flow > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .flow > div:last-child { border-bottom: 0; }
+  .boss { grid-template-columns: minmax(0, 1fr); }
+  .boss .pic { max-width: 260px; }
+}
+@media (max-width: 520px) {
+  .brand span { display: none; }
+  .mem { grid-template-columns: minmax(0, 1fr); }
+  .steps > li { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="ページ内リンク">
+  <div class="wrap">
+    <div class="brand"><i aria-hidden="true"></i><span>バトロワ</span></div>
+    <div class="links">
+      <a href="#about">概要</a><a href="#install">導入手順</a><a href="#controls">操作とシステム</a><a href="#craft">合成</a><a href="#keys">キー設定</a>
+      <a href="#roles">役職</a><a href="#items">アイテム</a><a href="#bosses">ボス・スカブ</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Minecraft Java 1.20.1 / Forge バトルロイヤル</p>
+      <h1>バトロワ</h1>
+      <p class="lead">銃と防具と、ちょっとおかしなアイテムで最後の1人を決める。縮んでいく四角いアンチの中で、チェストを漁り、役職のスキルとオリジナルアイテムを使いこなして生き残ろう。</p>
+      <div class="facts">
+        <div><b>10人</b><span>最大参加人数</span></div>
+        <div><b>4ラウンド</b><span>合計17分でアンチが縮む</span></div>
+        <div><b>10種</b><span>役職（ランダム）</span></div>
+        <div><b id="itemCount">60種+</b><span>オリジナルアイテム</span></div>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#install">導入手順を見る</a>
+        <a class="btn" href="#keys">先にキー設定を確認</a>
+      </div>
+    </div>
+    <div class="zonebox" aria-hidden="true">
+      <svg viewBox="0 0 320 320">
+        <rect x="10" y="10" width="300" height="300" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="60" y="60" width="200" height="200" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <rect x="100" y="100" width="120" height="120" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <rect x="135" y="135" width="50" height="50" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <text class="lbl" x="16" y="28">R150</text><text class="lbl" x="66" y="78">R100</text><text class="lbl" x="106" y="118">R60</text><text class="lbl" x="139" y="150">R25</text>
+        <rect class="shrink" x="10" y="10" width="300" height="300" fill="var(--zone-soft)" fill-opacity=".45" stroke="var(--zone)" stroke-width="3"/>
+        <circle cx="160" cy="160" r="4" fill="var(--zone)"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="about" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">01 · 概要</p>
+    <h2>試合の流れ</h2>
+    <p>マップ全体（約300×300ブロック）が戦場です。アンチ（安全地帯）は正方形で、ラウンド中ずっと少しずつ縮みます。外にいると2秒ごとに5ダメージ。死んだら観戦になり、最後の1人が勝ちです。</p>
+  </div>
+  <div class="flow">
+    <div><b>START</b><h3>スポーン</h3><p>最大体力80・全回復。役職がランダムに決まる。5秒間は動けない</p></div>
+    <div><b>0:30</b><h3>PvP 解禁</h3><p>開始から30秒は撃ち合い不可。この間にチェストを漁る</p></div>
+    <div><b>ROUND 1–2</b><h3>漁って備える</h3><p>8分＋3分。ROUND 1 は銃を持った雑魚敵スカブがうろつく。2ラウンド目からは救援物資が落ちてくる</p></div>
+    <div><b>ROUND 3–4</b><h3>決戦</h3><p>3分ずつ。アンチは半径3まで縮む。ラウンドごとにチェストの中身が入れ替わる</p></div>
+    <div><b>WIN</b><h3>最後の1人</h3><p>10秒後に全員ロビーへ。壊れたマップは自動で元に戻る</p></div>
+  </div>
+  <div class="tablebox" style="margin-top:14px">
+    <table>
+      <thead><tr><th>ラウンド</th><th>長さ</th><th>アンチの半径</th><th>チェストのレア度（コモン / レア / エピック）</th></tr></thead>
+      <tbody>
+        <tr><td>ROUND 1</td><td class="num">8分</td><td class="num">150 → 100</td><td class="num">50% / 35% / 15%</td></tr>
+        <tr><td>ROUND 2</td><td class="num">3分</td><td class="num">100 → 60</td><td class="num">35% / 40% / 25%</td></tr>
+        <tr><td>ROUND 3</td><td class="num">3分</td><td class="num">60 → 25</td><td class="num">25% / 40% / 35%</td></tr>
+        <tr><td>ROUND 4</td><td class="num">3分</td><td class="num">25 → 3</td><td class="num">15% / 40% / 45%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="panel"><h3>チェスト</h3><p>中身は「武器だけ」「アイテムだけ」「両方」の3種類。鍵のかかった部屋には★レジェンド、特別な3か所にはマークドチェストがあり、ラウンドが変わっても入れ替わらない一番レアな箱です。</p></div>
+    <div class="panel"><h3>鍵部屋</h3><p>鉄の扉で閉ざされた部屋が12か所。合う鍵を手に持って扉に近づくと、その試合の間ずっと開きます。鍵はなくなりません。</p></div>
+    <div class="panel"><h3>救援物資</h3><p>2ラウンド目以降、ニワトリにつながれたチェストがアンチ内のどこかへゆっくり落ちてきます。落下地点の座標は全員に通知。中身はマークド級の武器・防具や大量の回復など。</p></div>
+    <div class="panel"><h3>ボス</h3><p>Tagilla と Wedge はマップの決まった場所に毎試合出現。倒すと装備と「ボスの核」を落とします。Killa は混沌チケットで呼び出されます。</p></div>
+    <div class="panel"><h3>スカブ</h3><p>ROUND 1 の間だけ、銃を持った敵「Scav」が24体ほどマップにいます（強めの Scavレイダーも混ざる）。倒すと持っていた銃の弾を必ず落とし、アタッチメントや回復、たまに鍵も手に入ります。ROUND 2 になると撤退して消えます。</p></div>
+  </div>
+</section>
+
+<section id="install" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">02 · 導入手順</p>
+    <h2>遊べるようになるまで</h2>
+    <p>必要なファイルはギガファイル便で配布しています。ギガファイル便には保存期限があるので、早めにダウンロードしてください。</p>
+  </div>
+  <ol class="steps">
+    <li><div class="body">
+      <h3>4つのファイルをダウンロードする</h3>
+      <div class="dl" id="dl"></div>
+      <p class="muted" style="font-size:13.5px">リンク先で「ダウンロード」ボタンを押すと zip が保存されます。</p>
+    </div></li>
+    <li><div class="body">
+      <h3>Forge フォルダを置く場所を決めて解凍する</h3>
+      <p>「Forge フォルダ」の zip を解凍し、中の <code>minecraft battle</code> フォルダを分かりやすい場所に置きます。</p>
+      <div class="path">C:\Minecraft\minecraft battle</div>
+      <p class="muted" style="font-size:13.5px">デスクトップや OneDrive の中は避けてください（同期でファイルが壊れることがあります）。</p>
+    </div></li>
+    <li><div class="body">
+      <h3>MOD・銃パック・リソースパックを入れる</h3>
+      <ul>
+        <li>「MOD」の zip を解凍し、中の <code>.jar</code> ファイルを全部 <code>minecraft battle\mods</code> に入れる</li>
+        <li>「銃パック」の中の zip は<b>解凍せずに</b> <code>minecraft battle\tacz</code> に入れる（TaCZ は zip のまま読み込みます）</li>
+        <li>「リソースパック」の <code>BattleRoyale_Items_RP.zip</code> も<b>解凍せずに</b> <code>minecraft battle\resourcepacks</code> に入れる（同じ名前の古いファイルがあれば置き換える）</li>
+      </ul>
+    </div></li>
+    <li><div class="body">
+      <h3>Forge をインストールする</h3>
+      <ul>
+        <li>公式ランチャーで、バニラの <b>1.20.1</b> を一度だけ起動して閉じる</li>
+        <li><code>minecraft battle</code> フォルダの中の <code>forge-1.20.1-47.4.26-installer.jar</code> をダブルクリック</li>
+        <li>「Install client」を選んで OK。完了の表示が出れば成功です</li>
+      </ul>
+      <p class="note">jar が開かないときは Java が入っていません。<a href="https://www.java.com/ja/download/" target="_blank" rel="noopener">java.com</a> から Java をインストールしてからもう一度試してください。</p>
+    </div></li>
+    <li><div class="body">
+      <h3>起動構成を作る</h3>
+      <p>公式ランチャーの「起動構成」→「新規作成」で、次のように設定します。</p>
+      <ul>
+        <li>バージョン：<b>release 1.20.1-forge-47.4.26</b></li>
+        <li>ゲームディレクトリ：手順2で置いた <code>minecraft battle</code> フォルダ</li>
+      </ul>
+    </div></li>
+    <li><div class="body">
+      <h3>メモリの割り当てを増やす（必須）</h3>
+      <p>MOD と銃が多いので、初期設定の 2GB では落ちたり固まったりします。同じ起動構成の「その他のオプション」→「JVM引数」の先頭にある <code>-Xmx2G</code> を書き換えてください。</p>
+      <div class="mem">
+        <div><b>-Xmx8G</b><span>PC のメモリが 16GB 以上（おすすめ）</span></div>
+        <div><b>-Xmx6G</b><span>PC のメモリが 12GB 程度</span></div>
+        <div><b>-Xmx4G</b><span>PC のメモリが 8GB（最低ライン・重い）</span></div>
+      </div>
+      <p class="muted" style="font-size:13.5px">PC のメモリの半分を目安に。多すぎると逆に PC 全体が重くなります。CurseForge などを使う場合は、その設定画面の「メモリ割り当て」で同じ値にします。</p>
+    </div></li>
+    <li><div class="body">
+      <h3>起動してリソースパックを有効にする</h3>
+      <p>起動構成から起動します（初回は数分かかります）。タイトル画面の「設定」→「リソースパック」で <b>BattleRoyale_Items_RP</b> を右側（有効）に移します。オリジナルアイテムの見た目がこれで変わります。</p>
+    </div></li>
+    <li><div class="body">
+      <h3>キー設定を整えて参加する</h3>
+      <p>このあとの「<a href="#keys">キー設定</a>」の表のとおり、使わないキーを消してから参加してください。参加先：<code id="server">（主催者から案内します）</code></p>
+    </div></li>
+  </ol>
+</section>
+
+<section id="controls" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">03 · 操作とシステム</p>
+    <h2>銃の操作と、覚えておくこと</h2>
+    <p>銃は TaCZ、防具は ZeroContact、回復と投げ物は LR Tactical という MOD を使っています。キーは初期設定のものです。</p>
+  </div>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>キー</th><th>操作</th><th>メモ</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>左クリック</kbd></td><td>撃つ</td><td>弾はインベントリに入れておけば OK</td></tr>
+        <tr><td><kbd>右クリック</kbd></td><td>覗く（ADS）</td><td>スコープ付きはズーム</td></tr>
+        <tr><td><kbd>R</kbd></td><td>リロード</td><td>その銃に合う弾がインベントリにあるときだけ</td></tr>
+        <tr><td><kbd>G</kbd></td><td>射撃モード切替</td><td>セミオート / フルオート / バースト</td></tr>
+        <tr><td><kbd>Z</kbd></td><td>アタッチメント画面</td><td>スコープ・サイレンサー・マガジンなどを付け替える</td></tr>
+        <tr><td><kbd>V</kbd></td><td>スコープの倍率切替</td><td>近接攻撃も初期は V（キー設定を参照）</td></tr>
+        <tr><td><kbd>C</kbd></td><td>伏せ</td><td></td></tr>
+        <tr><td><kbd>H</kbd></td><td>点検（銃を眺める）</td><td></td></tr>
+        <tr><td><kbd>F</kbd></td><td><b>役職スキル</b></td><td>オフハンドのスキルアイテムで発動。常時発動型は説明が出る</td></tr>
+        <tr><td><kbd>右クリック</kbd></td><td>オリジナルアイテム・回復を使う</td><td>手に持って使う。回復は長押し</td></tr>
+        <tr><td><kbd>左 / 右クリック</kbd></td><td>グレネードを投げる</td><td>LR Tactical の投げ物。クリックで投げ方が変わる</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="panel"><h3>インベントリ</h3><ul><li>使えるのはホットバー9マス＋インベントリ左上5マス。残りはロック</li><li>バックパックで1マスずつ解放（小1・中2・大3）</li><li>オフハンドは役職のスキルアイテムで固定</li><li>飲み終わった空き瓶は自動で消える</li><li>タグ違いで分かれた食べ物は、持ち替えると1つにまとまる</li></ul></div>
+    <div class="panel"><h3>防具（ZeroContact）</h3><ul><li>ヘルメットは頭、ベスト・プレートキャリアは胴に着るだけ</li><li><b>プレートは拾うだけで自動装着</b>（前→後ろ、強い順）</li><li>防護クラスが弾の貫通力より高いほど止めやすい</li><li>防具が変わるとチャットに今のクラスが出る</li><li>ズボン・ブーツはバニラの防具</li></ul></div>
+    <div class="panel"><h3>合成（ディスペンサー）</h3><p>マップにある合成用のディスペンサーに材料を入れると、別のアイテムに変わります。武器・混沌チケット・防具のランクアップ・弾の変換など14種類。やり方とレシピは「<a href="#craft">合成</a>」へ。</p></div>
+    <div class="panel"><h3>混沌チケット</h3><p>使うと8種類のどれかがランダムに起きる：全員発光／全員盲目／持ち物シャッフル／Killa 出現／脱落者の復活／位置入れ替え／隕石「マリコの怒り」／外にいる全員に落雷「天罰の雷」。</p></div>
+    <div class="panel"><h3>覚えておくと得</h3><ul><li>不死のトーテムはインベントリにあれば発動</li><li>ガスマスクを拾うと自動で着け、盲目にならない</li><li>額縁に飾られたアイテムは取れる（毎試合元に戻る）</li><li>手配書を使うとキル数トップが3分間光る</li></ul></div>
+  </div>
+</section>
+
+<section id="craft" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">04 · 合成</p>
+    <h2>ディスペンサーで合成する</h2>
+    <p>マップにある合成用のディスペンサーに材料を入れると、0.5秒ほどで完成品に変わります。作業台は使いません。</p>
+  </div>
+  <div class="howto">
+    <div><h3>合成用のディスペンサーを探す</h3><p>マップに6か所あります。普通のディスペンサーと見た目は同じなので、座標を覚えておくと便利です。</p>
+      <div class="coords"><code>-18 -51 129</code><code>142 -60 31</code><code>-123 -13 -138</code><code>-41 -60 -21</code><code>130 -44 -59</code><code>60 -53 -16</code></div></div>
+    <div><h3>右クリックで開いて材料を入れる</h3><p>9マスのどこに入れても大丈夫です。順番も関係ありません。材料が多すぎても、余った分はそのまま残ります。</p></div>
+    <div><h3>変わったら取り出す</h3><p>条件がそろうと0.5秒以内に完成品に変わります。何回分も入れた場合は、0.5秒ごとに1回ずつ合成されます。</p></div>
+  </div>
+  <div id="recipeGroups"></div>
+  <div class="rgroup">
+    <h3>防具のランクアップの順番</h3>
+    <div class="panel chain">
+      <p>防具かヘルメットと<b>予備のプレートを1枚</b>（種類は自由）入れると、下の順番で1段階上になります。着けているプレートは材料にならないので、別のプレートを入れてください。</p>
+      <p><b>ヘルメット</b>　帽子 → 6B47 → Hound Wolf → UNTAR → TBH → AirFrame → Bastion（黒）→ British23 ／ 帽子（水色）→ 6B47（Arctic）→ Phonetalker → C2R → AirFrame ／ Bastion（緑・迷彩）→ British23</p>
+      <p><b>プレートキャリア</b>　JPC v1 → Hexgrid → JPC v2 → AVS → Defender-2 → SS Lv119 ／ Thor → FCPC → Hound Wolf → C2R Lite → IOTV</p>
+      <p><b>ベスト</b>　6B2 → UNTAR → IBA OTV → 6B23-1 → 6B43 ／ 6B23-2 → 6B43</p>
+    </div>
+  </div>
+</section>
+
+<section id="keys" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">05 · キー設定</p>
+    <h2>邪魔なキーを消しておく</h2>
+    <p>MOD が多く、初期設定のままだとリロードの <kbd>R</kbd> で別の画面が開くなど、同じキーがぶつかっています。「設定」→「操作設定」→「キー割り当て」で、下の項目を選んで <kbd>Esc</kbd> を押すと「なし」にできます。赤字のキーはぶつかっている印です。</p>
+  </div>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>どうする</th><th>カテゴリ（MOD）</th><th>項目</th><th>初期キー</th><th>理由</th></tr></thead>
+      <tbody id="keyRows"></tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:12px"><kbd>F</kbd>（オフハンドと持ち替え）は役職スキルに使うので<b>消さないでください</b>。TaCZ のキー（R・G・Z・V・C・H）もそのまま使います。</p>
+</section>
+
+<section id="roles" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">06 · 役職</p>
+    <h2>10種類の役職</h2>
+    <p>試合開始時に全員へランダムで割り当てられます（同じ試合で重複なし）。オフハンドに入るスキルアイテムを <kbd>F</kbd> で使います。</p>
+  </div>
+  <div class="cards" id="roleCards"></div>
+</section>
+
+<section id="items" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">07 · アイテム</p>
+    <h2>オリジナルアイテム</h2>
+    <p>右クリックで使うものが中心です。チェストのレア度は星の数が多いほど出にくいアイテムです。</p>
+  </div>
+  <div class="chips" id="chips">
+    <input class="search" id="q" type="search" placeholder="名前で探す" aria-label="アイテムを名前で探す">
+  </div>
+  <div class="cards" id="itemCards"></div>
+  <p class="muted" id="noHit" hidden>見つかりませんでした。</p>
+</section>
+
+<section id="bosses" class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">08 · ボス・スカブ</p>
+    <h2>ボスとスカブ</h2>
+    <p>体力100、攻撃力上昇II。ボスの弾は当たるたびに6ダメージが上乗せされます（最大30）。倒すと装備と「ボスの核」を必ず落とします。ボスの装備はチェストからは出ません。</p>
+  </div>
+  <div class="bosses" id="bossCards"></div>
+  <div class="sec-head" style="margin-top:40px">
+    <h3 style="font-size:22px">スカブ（ROUND 1 だけの敵）</h3>
+    <p>銃を持って向かってくる敵です。倒すと弾や装備が手に入るので、序盤の装備集めに。</p>
+  </div>
+  <div class="bosses" id="scavCards"></div>
+</section>
+</main>
+
+<footer class="wrap">
+  <p>バトロワ（Minecraft Java 1.20.1 / Forge）参加ガイド。使用 MOD：TaCZ・ZeroContact・LR Tactical・Fracture Point ほか。</p>
+</footer>
+
+<script>
+/* ===== 主催者が書き換える設定 =====
+   ギガファイル便のリンクと参加先をここに書くと、ページに反映されます。 */
+const SITE = {
+  downloads: [
+    { label: "Forge フォルダ", note: "minecraft battle フォルダ（設定込み）", url: "https://90.gigafile.nu/0130-b82d6a4f978f6f30da1b4da5f4bc64e21" },
+    { label: "MOD", note: "mods フォルダに入れる .jar 一式", url: "https://90.gigafile.nu/0130-9538e23fae7ae8854a15e92aa9dce4b7" },
+    { label: "銃パック", note: "tacz フォルダに入れる（解凍しない）", url: "https://90.gigafile.nu/0130-20bced0cfa40ac8ba278325ddabbb0df" },
+    { label: "リソースパック", note: "resourcepacks フォルダに入れる（解凍しない）", url: "https://15.gigafile.nu/0130-d219286020b4ee7312925e4a9d5076731" }
+  ],
+  server: ""
+};
+/* ===== ここまで ===== */
+
+const DATA = {"items": [{"id": "void", "name": "虚空", "cat": "防御・回復", "desc": "5秒間 透明・俊敏II・無敵。透明の間は防具も外れて見えなくなり、終わると元に戻る", "get": ["エピックチェスト（★★★★）", "救援物資"]}, {"id": "blink", "name": "テイルウィンド", "cat": "移動", "desc": "向いている方向へ最大8ブロック瞬間移動", "get": ["コモンチェスト（★★）", "救援物資", "スカブ（たまに）"]}, {"id": "updraft", "name": "アップドラフト", "cat": "移動", "desc": "約12ブロック飛び上がる（ゆっくり落下はしないので、落下ダメージに注意）", "get": ["コモンチェスト（★★）", "スカブ（たまに）"]}, {"id": "paranoia", "name": "パラノイア", "cat": "妨害", "desc": "波動を飛ばす。当たると盲目＋暗闇5秒", "get": ["救援物資"]}, {"id": "solari", "name": "ソラリロケット", "cat": "防御・回復", "desc": "自分に耐性II（15秒）", "get": ["レアチェスト（★★★★）", "エピックチェスト（★）", "救援物資"]}, {"id": "aegis", "name": "シーカーアームガード", "cat": "防御・回復", "desc": "5秒間「金の像」。無敵だが何もできない", "get": ["エピックチェスト（★★★）", "救援物資"]}, {"id": "earthshatter", "name": "アースシャター", "cat": "妨害", "desc": "地を這う衝撃波。当たると1.5秒間スタン（何もできない）", "get": ["エピックチェスト（★★★★）", "救援物資"]}, {"id": "tredecim", "name": "トレデキム", "cat": "攻撃", "desc": "投げるポーション。当たった相手に「10＋その相手のキル数×10」のダメージ（最大80）", "get": ["レアチェスト（★★★）", "救援物資"]}, {"id": "shungoku", "name": "瞬獄殺", "cat": "攻撃", "desc": "20秒間 俊敏II＋攻撃力上昇II（エクスカリバーとHammerには乗らない）", "get": ["★レジェンドチェスト（★★★★★）", "救援物資"]}, {"id": "uav", "name": "UAV", "cat": "索敵", "desc": "半径50ブロック以内の敵を10秒発光", "get": ["エピックチェスト（★★★★）", "救援物資"]}, {"id": "cuav", "name": "カウンターUAV", "cat": "索敵", "desc": "自分の発光を消し、他の全員を10秒発光", "get": ["★レジェンドチェスト（★★★）", "救援物資"]}, {"id": "kizu", "name": "すごいキズぐすり", "cat": "防御・回復", "desc": "最大体力の8割を回復", "get": ["★レジェンドチェスト（★★★★）", "救援物資", "合成：小さい回復アイテム×3"]}, {"id": "wakatteru", "name": "わかってるって！わかってるって！！", "cat": "妨害", "desc": "当てた相手に鈍足III（8秒）。画面中央にセリフ", "get": ["コモンチェスト（★★）", "レアチェスト（★）", "スカブ（たまに）"]}, {"id": "homerun", "name": "ホームランバット", "cat": "攻撃", "desc": "攻撃力2・ノックバックXII。当てると壊れる", "get": ["レアチェスト（★★）"]}, {"id": "bounty", "name": "手配書", "cat": "索敵", "desc": "キル数トップを3分間発光。倒すと最大体力+5、逃げ切られたら相手が+5", "get": ["エピックチェスト（★★）"]}, {"id": "uwanosora", "name": "上の空", "cat": "妨害", "desc": "一番近い相手の視点を1秒間、真上に", "get": ["エピックチェスト（★★★★★）"]}, {"id": "mawaremigi", "name": "回れ右", "cat": "妨害", "desc": "一番近い相手の向きを180度回転", "get": ["エピックチェスト（★★★★）"]}, {"id": "chaos", "name": "混沌チケット", "cat": "特殊", "desc": "ランダムなイベント（下の表）", "get": ["レアチェスト（★★★★★★）", "エピックチェスト（★★★★★）", "★レジェンドチェスト（★★★★）", "救援物資", "合成：カオスの欠片×3"]}, {"id": "shard1", "name": "剣の破片（柄）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとエクスカリバー", "get": ["★レジェンドチェスト（★★★★★★）", "救援物資"]}, {"id": "shard2", "name": "剣の破片（刃）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとエクスカリバー", "get": ["★レジェンドチェスト（★★★★★★）", "救援物資"]}, {"id": "shard3", "name": "剣の破片（鍔）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとエクスカリバー", "get": ["エピックチェスト（★★★★★★）", "救援物資"]}, {"id": "excalibur", "name": "エクスカリバー", "cat": "攻撃", "desc": "攻撃力20の剣。5回攻撃すると壊れる", "get": ["合成：剣の破片（柄・刃・鍔）"]}, {"id": "molot", "name": "Tagilla Hammer", "cat": "攻撃", "desc": "攻撃力30。1回殴ると壊れる（Tagilla のドロップ）", "get": ["Tagilla が落とす"]}, {"id": "refract", "name": "リフラクト", "cat": "移動", "desc": "1回目：今の場所に印を置く（消費しない）／2回目：印の場所へテレポート（ここで消費）", "get": ["レアチェスト（★★）", "救援物資"]}, {"id": "karuishi", "name": "かるいし", "cat": "移動", "desc": "ホットバーに入れておくだけで俊敏I", "get": ["レアチェスト（★★★★★）"]}, {"id": "gunzu", "name": "軍ズ", "cat": "特殊", "desc": "ハンドガン持ちのハスクを3体召喚。召喚した本人は狙わず、他のプレイヤーを攻撃。60秒で消える", "get": ["レアチェスト（★★★★★）"]}, {"id": "hkpr", "name": "ハイパーキネティックポジションリバーサー", "cat": "移動", "desc": "一番近い相手と位置を入れ替える", "get": ["レアチェスト（★★★★）", "エピックチェスト（★★★）", "救援物資"]}, {"id": "backpack", "name": "バックパック（小）", "cat": "特殊", "desc": "ロックされたインベントリのマスを1つ解放（試合中のみ）", "get": ["コモンチェスト（★★★★★）", "エピックチェスト（★★★★）", "スカブ（たまに）"]}, {"id": "nut", "name": "木のみ", "cat": "素材", "desc": "アコーンの能力用", "get": ["コモンチェスト（★★★★）", "スカブ（たまに）"]}, {"id": "kyuiin", "name": "キュイーン", "cat": "攻撃", "desc": "視点の方向に、壁を貫通する太いビームを撃つ（射程50）。らせん状の光と衝撃波の輪が走り、少しの間 光の残像が残る。線上の相手全員（ボスも）に25ダメージ。防具では軽減されない", "get": ["エピックチェスト（★★★★★）", "救援物資"]}, {"id": "shockwave", "name": "ショックウェーブ", "cat": "移動", "desc": "投げると、何かに当たったところ（最長約2秒）で炸裂。半径5ブロックの全員とアイテムを、爆心から外向き・斜め上へ吹き飛ばす（約10ブロック）。爆心のすぐ近くにいる本人は、見ている方向の斜め上へ飛ぶ。ダメージなし、6秒間は落下ダメージを大きく軽減", "get": ["レアチェスト（★★）", "救援物資"]}, {"id": "pshield", "name": "プロテクトシールド", "cat": "防御・回復", "desc": "目の前2ブロック先に、幅5×高さ3の壁（水色のコンクリート）を10秒間つくる。空いているマスにだけ置かれる", "get": ["コモンチェスト（★★★★★）", "救援物資", "スカブ（たまに）"]}, {"id": "gunp1", "name": "ガンパーツ（バレル）", "cat": "素材", "desc": "3種類をディスペンサーに入れると狙撃銃「HAER-90 “Artemis”」（EMX-Arms・1発175ダメージ・1発撃つと銃が消える）", "get": ["マークドチェスト", "救援物資"]}, {"id": "gunp2", "name": "ガンパーツ（レシーバー）", "cat": "素材", "desc": "3種類をディスペンサーに入れると狙撃銃「HAER-90 “Artemis”」（EMX-Arms・1発175ダメージ・1発撃つと銃が消える）", "get": ["★レジェンドチェスト（★★★★★★）", "救援物資"]}, {"id": "gunp3", "name": "ガンパーツ（ストック）", "cat": "素材", "desc": "3種類をディスペンサーに入れると狙撃銃「HAER-90 “Artemis”」（EMX-Arms・1発175ダメージ・1発撃つと銃が消える）", "get": ["エピックチェスト（★★★★★★）", "救援物資"]}, {"id": "drgp1", "name": "ドラグーンパーツ（弾頭）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとドラグーン", "get": ["エピックチェスト（★★★★★★）", "救援物資"]}, {"id": "drgp2", "name": "ドラグーンパーツ（推進器）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとドラグーン", "get": ["★レジェンドチェスト（★★★★★★）", "救援物資"]}, {"id": "drgp3", "name": "ドラグーンパーツ（発射筒）", "cat": "素材", "desc": "3種類をディスペンサーに入れるとドラグーン", "get": ["マークドチェスト", "救援物資"]}, {"id": "dragoon", "name": "ドラグーン", "cat": "攻撃", "desc": "右クリックで視点の方向にミサイルを発射（3発。耐久ゲージが残り弾数。次の発射まで1.5秒）。何かに当たると爆発し、2ブロック以内50・3.5ブロック以内35・5ブロック以内20ダメージ（撃った本人とシーカーアームガード中の人は無傷）。ブロックは壊さない。ドラグーンパーツ3種から合成", "get": ["合成：ドラグーンパーツ3種"]}, {"id": "bagm", "name": "バックパック（中）", "cat": "特殊", "desc": "ロックされたマスを2つ解放（試合中のみ）。小×2を合成すると、中と小が1つずつできる", "get": ["レアチェスト（★★★★★）", "合成：バックパック（小）×2 → 中＋小"]}, {"id": "bagl", "name": "バックパック（大）", "cat": "特殊", "desc": "ロックされたマスを3つ解放（試合中のみ）。中×2を合成すると、大と中が1つずつできる", "get": ["救援物資", "合成：バックパック（中）×2 → 大＋中"]}, {"id": "gotsu", "name": "ゴツゴツメット", "cat": "防御・回復", "desc": "ホットバーに入れておくと、自分を攻撃したプレイヤー（銃・近接とも）に「その相手の最大体力の1/10」の反動ダメージ（防具無視・最低2・最大8）。同じ相手には1秒に1回まで", "get": ["エピックチェスト（★★★★）", "救援物資"]}, {"id": "tabe", "name": "たべのこし", "cat": "防御・回復", "desc": "ホットバーに入れておくと、6秒ごとに体力を2ハート回復", "get": ["救援物資"]}, {"id": "sj6", "name": "SJ6", "cat": "移動", "desc": "注射器（fracturepoint の Propital と同じ見た目・注射モーション）。右クリックで注射し、約2秒後に3分間 跳躍力上昇II。Propital 本来の効果は付かない。水中では使えない", "get": ["レアチェスト（★）", "救援物資"]}, {"id": "ammobox", "name": "弾薬ボックス", "cat": "特殊", "desc": "ホットバーにある銃の弾薬を1スタックもらう（銃が複数あるときは一番左の銃）。デフォルト銃・Tarkov・EMX-Arms の全115丁に対応。ボスが落とした銃と合成した銃（Artemis）は不可", "get": ["エピックチェスト（★★★）", "救援物資"]}, {"id": "repair", "name": "アーマーリペアキット", "cat": "防御・回復", "desc": "着ている防具すべての耐久値を回復（減っている分の半分が戻る）。減っていない防具しかないときは消費しない", "get": ["エピックチェスト（★★★）", "救援物資"]}, {"id": "drone", "name": "ドローン", "cat": "索敵", "desc": "使うと15秒間ドローンになる。本体（自分の頭と防具を着けた像）はその場に残り、自分は透明になって、見ている方向へ自動で前進（上を向けば上昇、下を向けば下降）。スニークで停止、スニークを1.5秒長押しで終了、持ち替えでも終了。ブロックはすり抜けない、本体から60ブロックまで。無敵ではなく、ダメージを受けるとその場で撃墜されて本体に戻る（受けたダメージは本人に入る）。手の「ドローン操作」を右クリックで矢を1発撃てて、当たった相手（ボスも）は10秒間発光。時間切れ・チェストやディスペンサーを開いたときも終了。ドローン中はアイテムを拾えない", "get": ["レアチェスト（★★★）", "救援物資"]}, {"id": "key_backyard", "name": "マークの刻まれたバックヤードの鍵", "cat": "鍵", "desc": "マークの刻まれた鍵：この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["Tagilla が必ず落とす／合成：普通の鍵×3"]}, {"id": "key_kiba_out", "name": "KIBAstore外側の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_kiba_in", "name": "KIBAstore内側の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_medical", "name": "URLTRA medicalの鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_jewelry", "name": "宝石店の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_pharmacy", "name": "薬局の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_dorm", "name": "マークの刻まれた社員寮の鍵", "cat": "鍵", "desc": "マークの刻まれた鍵：この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["エピック・★・マークドチェスト", "合成：普通の鍵×3（マークの鍵がランダム）"]}, {"id": "key_champion", "name": "チャンピオンの部屋の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_caretaker", "name": "管理人室の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_president", "name": "社長室の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_meeting", "name": "会議室の鍵", "cat": "鍵", "desc": "この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["レア・エピック・★チェスト", "スカブ（5%）"]}, {"id": "key_vo", "name": "マークの刻まれたVO部屋の鍵", "cat": "鍵", "desc": "マークの刻まれた鍵：この鍵に合う扉の前で・手に持つと扉が開く（なくならない）", "get": ["エピック・★・マークドチェスト", "合成：普通の鍵×3（マークの鍵がランダム）"]}, {"id": "chaos_frag", "name": "カオスの欠片", "cat": "素材", "desc": "3つディスペンサーに入れると・混沌チケットになる", "get": ["コモンチェスト（★★★★★★）", "スカブ（たまに）"]}, {"id": "boss_core", "name": "ボスの核", "cat": "素材", "desc": "ボスが必ず落とす・エクスカリバーと一緒にディスペンサーに入れると・強化エクスカリバーになる", "get": ["ボス（Tagilla・Wedge・Killa）が必ず落とす"]}, {"id": "excalibur_plus", "name": "強化エクスカリバー", "cat": "攻撃", "desc": "攻撃力26・10回攻撃すると壊れる", "get": ["合成：エクスカリバー＋ボスの核"]}, {"id": "signal_part", "name": "信号パーツ", "cat": "素材", "desc": "3つディスペンサーに入れると・発煙弾（救援要請）になる", "get": ["今はチェストから出ない（デバッグ用チェストのみ）"]}, {"id": "flare", "name": "発煙弾（救援要請）", "cat": "特殊", "desc": "試合中に使うと、自分の真上から救援物資が落ちてくる・（全員に場所が知らされる）", "get": ["合成：信号パーツ×3"]}, {"id": "grapple", "name": "グラップル", "cat": "移動", "desc": "視点の方向にフックを飛ばす（射程30）。ブロックに刺さるとそこまで自分が引き寄せられ、プレイヤーに当たるとその人の所まで飛んでいく（2秒まで・途中で壁に当たると止まる。到着後1秒間 落下速度低下）。3回使える", "get": ["レアチェスト（★★）"]}, {"id": "rgrab", "name": "ロケットグラブ", "cat": "攻撃", "desc": "視点の方向にロケットの手を飛ばす（射程20）。最初に触れた敵を掴んで3ダメージ＋自分の目の前まで引き寄せる（1.5秒まで・壁に当たると止まる）。シーカーアームガード中の相手は掴めない。3回使える", "get": ["レアチェスト（★★★★★）"]}, {"id": "totem", "name": "不死のトーテム", "cat": "防御・回復", "desc": "インベントリのどこに入っていても発動する（手に持っていれば普段どおり）。死んだ場所で、死ぬ直前の持ち物のまま体力1ハートで復活し、再生II・衝撃吸収II・火炎耐性が付く。1個消費", "get": ["マークドチェスト"]}], "roles": [{"id": "breaker", "name": "ブレイカー", "type": "攻撃型", "color": "red", "active": false, "desc": "キルするたびに10秒間、俊敏II＋攻撃力上昇I", "short": "キル・ラッシュ：キルするたびに10秒間"}, {"id": "glutton", "name": "グラトニー", "type": "成長型", "color": "gold", "active": false, "desc": "食べ物を食べるたびに最大体力アップ。良い食べ物ほど多く増える：パン・リンゴなど +2／焼いた肉・シチュー・ベイクドポテト・パンプキンパイ +3／金のニンジン +5／金のリンゴ +8／エンチャント金リンゴ +15（合計 最大+40）。満腹でも食べられる（満腹になると満腹ゲージを1だけ減らす。そのとき空腹の表示が一瞬出ます）", "short": "暴食進化：食べ物を食べるたびに最大体力+2"}, {"id": "rhythmer", "name": "リズマー", "type": "支援型", "color": "aqua", "active": true, "desc": "音楽はいつも鳴りっぱなし。Fキーで2曲を切り替え：癒しの曲（ハープ）＝再生能力／疾走の曲（8bit＋ドラム）＝移動速度上昇。どちらの曲も周りに聞こえるので位置がばれる", "short": "ビート・リカバリー：Fキーで音楽オン/オフ"}, {"id": "acorn", "name": "アコーン", "type": "収集型", "color": "green", "active": false, "desc": "「木のみ」を2個持って開始。木のみ2個ごとに1段階：①満腹 ②俊敏 ③跳躍 ④再生 ⑤耐性（10個で全部）", "short": "木の実ストック：木のみ2個ごとに1段階"}, {"id": "rift", "name": "リフト", "type": "機動型", "color": "dark_purple", "active": true, "desc": "クロノブレイク（Fキー）：3秒前にいた場所と向きに戻り、体力も3秒前の値まで回復する（3秒前より体力が多いときは減らない）。リフト本人にだけ、戻る先に紫の粒子が見える。CT 40秒→35→30→25秒（ラウンドごと）", "short": "クロノブレイク：Fキーで3秒前の場所と体力に戻る"}, {"id": "venom", "name": "ヴェノム", "type": "妨害型", "color": "dark_green", "active": true, "desc": "Fキーで8秒間 俊敏II＋歩いた場所に毒の雲（毒II）。クールダウン40秒。自分には毒が効かない", "short": "ポイズン・トレイル：Fキーで8秒間 俊敏II"}, {"id": "hawkeye", "name": "ホークアイ", "type": "偵察型", "color": "yellow", "active": true, "desc": "リーコンボルト：Fキーで手に弓が出る（持っていた物は一時的にしまわれる）。右クリック長押しで構えて放つと、矢が刺さった所（または当たった所）から半径30ブロックの敵とボスが10秒間発光（壁越しでも見える）。撃つとクールダウン30秒。10秒以内に撃たない・持ち替える・もう一度Fキーでキャンセル（クールダウンなし）。スナイパーは不要。オフハンドのスキルアイテムは矢で、これが弓の弾になる（減らない）", "short": "リーコンボルト：Fキーで弓を出し、右クリック長押しで放つ"}, {"id": "bomber", "name": "ボムテック", "type": "爆破型", "color": "gold", "active": false, "desc": "インベントリ左上3マスはM67専用スロット（各3個まで）。M67が入っていないマスには灰色の「M67専用スロット」アイコンが表示される（動かせない・捨てても戻る）。40秒ごとにM67を1個生成（満杯なら生成しない）。C4・RGN・スモークなど他の投げ物はこの3マスに入らず、入った場合は足元に落ちる", "short": "グレネード・ファクトリー：40秒ごとにM67を生成"}, {"id": "reverse", "name": "リバース", "type": "逆成長型", "color": "light_purple", "active": false, "desc": "最大体力140で開始。ラウンドが進むたびに-20、キルするたびに+10", "short": "リバース・エボリューション：最大体力140で開始"}, {"id": "resilient", "name": "レジリエント", "type": "耐久成長型", "color": "blue", "active": false, "desc": "5ダメージ受けるごとに最大体力+1（最大+30）。増えた分は回復しない", "short": "ダメージ・アダプト：5ダメージ受けるごとに"}]};
+
+const BOSSES = [
+  { id: "tagilla", name: "Tagilla", where: "マップの決まった場所に毎試合出現",
+    gear: "Tagilla マスク（防護クラス12）・Tagilla 胸当て・AA-12（フルオートのショットガン）",
+    drop: "マークの刻まれたバックヤードの鍵（必ず）・Tagilla Hammer（攻撃力30・1回で壊れる）・ボスの核",
+    tip: "近づくと AA-12 で一気に削られる。距離を取って頭を狙う" },
+  { id: "wedge", name: "Wedge", where: "マップの決まった場所に毎試合出現",
+    gear: "Bastion ヘルメット・SS Lv119（プレートキャリア）・Beta7 の脚と足・P90",
+    drop: "SS Lv119・Beta7 の脚と足・ボスの核",
+    tip: "連射の速い P90 を持つ。遮蔽物を使って撃ち合う" },
+  { id: "killa", name: "Killa", where: "混沌チケットの「Killa 出現」でアンチ内に現れる（5秒間光る）",
+    gear: "Killa ヘルメット・Killa 胸当て・RPK（軽機関銃）",
+    drop: "Killa ヘルメット・Killa 胸当て（着ている間だけ最大体力+5ずつ）・RPK・7.62×39mm 弾60発・ボスの核",
+    tip: "呼んだ本人も狙われる。倒せれば体力が増える防具が手に入る" }
+];
+
+const KEYS = [
+  ["off", "Quark", "バリアントセレクター", "R", "TaCZ のリロードと同じキー。押すと別の画面が開く"],
+  ["off", "ZeroContact", "モジュールクイックメニュー", "G", "TaCZ の射撃モード切替と同じキー。使わない"],
+  ["off", "ZeroContact", "選択したモジュールを起動", "H", "TaCZ の点検と同じキー。使わない"],
+  ["off", "ZeroContact", "無線を開く", "Shift + 3", "ホットバー3番と誤爆する"],
+  ["off", "バニラ（その他）", "ツールバーの保存", "C", "TaCZ の伏せと同じキー"],
+  ["off", "Urushi", "接続キー", "C", "TaCZ の伏せと同じキー"],
+  ["chg", "TaCZ", "近接攻撃", "V", "スコープ倍率切替と同じキー。空いているキー（例：B）に変えるか消す"],
+  ["off", "Warborn（WRB Armor）", "バックパックを開く・暗視の切替・ヘルメット上部の切替・プレートを外すメニュー", "B / N / H / U", "このゲームでは使わない。H は TaCZ の点検とぶつかる"],
+  ["off", "その他の防具系 MOD", "バイザーの切替・モジュラーメニュー・セレクターを開く・バックパックを開く", "X / J / 左Alt / B", "使わない。左Alt は建築モードとぶつかる"],
+  ["off", "Survival Instinct", "エクソスーツ・ダッシュ", "X", "使わない。バイザー切替とぶつかる"],
+  ["off", "Effortless Building", "建築モード・HUD・元に戻す・やり直し", "左Alt / テンキー+ / Ctrl+Z / Ctrl+Y", "建築用。誤爆するとブロックを置く画面が開く"],
+  ["off", "Quark", "回転のロック", "K", "誤爆すると向きが固定される"],
+  ["off", "FTB Ultimine", "一括破壊", "マウス5", "マップは壊せないので不要"],
+  ["off", "バニラ（その他）", "進捗 / ソーシャル", "L / P", "試合中に開くと危ない"],
+  ["keep", "TaCZ", "リロード・射撃モード・改造・伏せ・点検・倍率", "R / G / Z / C / H / V", "そのまま使う"],
+  ["keep", "バニラ（ゲームプレイ）", "オフハンドと持ち替え", "F", "役職スキル。絶対に消さない"]
+];
+const ACT = { off: ["消す", "off"], chg: ["変える", "chg"], keep: ["そのまま", "keep"] };
+
+const COLORS = { red: "#d6402a", gold: "#c98a0c", aqua: "#1aa0b4", green: "#3d8b3d", dark_purple: "#7a3cc8", dark_green: "#2f7a2a",
+                 yellow: "#c9a30c", light_purple: "#c048b8", blue: "#2f68d0" };
+
+function el(tag, attrs, html) { const e = document.createElement(tag); Object.assign(e, attrs || {}); if (html != null) e.innerHTML = html; return e; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+/* image box: shows images/<dir>/<id>.png; if the file is missing, a placeholder names the file to add */
+function pic(dir, id, alt) {
+  const box = el("div", { className: "pic" });
+  const img = el("img", { alt: alt, loading: "lazy", src: `images/${dir}/${id}.png` });
+  img.addEventListener("load", () => { if (img.naturalWidth <= 64) img.classList.add("px"); });
+  img.addEventListener("error", () => { img.replaceWith(el("div", { className: "ph" }, `画像準備中<br>${esc(dir)}/${esc(id)}.png`)); });
+  box.appendChild(img);
+  return box;
+}
+
+/* downloads + server */
+(function () {
+  const dl = document.getElementById("dl");
+  SITE.downloads.forEach(d => {
+    if (d.url) {
+      const a = el("a", { href: d.url, target: "_blank", rel: "noopener" }, `<b>${esc(d.label)}</b><small>${esc(d.note)}</small><small>ギガファイル便で開く ↗</small>`);
+      dl.appendChild(a);
+    } else {
+      dl.appendChild(el("span", { className: "off" }, `<b>${esc(d.label)}</b><small>${esc(d.note)}</small><small>リンクは主催者が案内します</small>`));
+    }
+  });
+  if (SITE.server) document.getElementById("server").textContent = SITE.server;
+})();
+
+/* keys */
+(function () {
+  const tb = document.getElementById("keyRows");
+  KEYS.forEach(([a, mod, item, key, why]) => {
+    const keys = key.split(" / ").map(k => `<kbd>${esc(k)}</kbd>`).join(" ");
+    tb.appendChild(el("tr", {}, `<td><span class="act ${ACT[a][1]}">${ACT[a][0]}</span></td><td>${esc(mod)}</td><td>${esc(item)}</td><td>${keys}</td><td>${esc(why)}</td>`));
+  });
+})();
+
+/* roles */
+(function () {
+  const box = document.getElementById("roleCards");
+  DATA.roles.forEach(r => {
+    const c = el("article", { className: "card role" });
+    c.style.setProperty("--rc", COLORS[r.color] || "var(--line)");
+    c.appendChild(pic("roles", r.id, r.name));
+    const t = el("div", { className: "txt" });
+    t.innerHTML = `<div class="top"><h3>${esc(r.name)}</h3><span class="tag">${esc(r.type)}</span><span class="tag">${r.active ? "Fキーで発動" : "常時発動"}</span></div><p>${esc(r.desc)}</p>`;
+    c.appendChild(t);
+    box.appendChild(c);
+  });
+})();
+
+/* items */
+(function () {
+  const cats = ["すべて"]; DATA.items.forEach(i => { if (!cats.includes(i.cat)) cats.push(i.cat); });
+  document.getElementById("itemCount").textContent = DATA.items.filter(i => i.cat !== "鍵").length + "種";
+  const chips = document.getElementById("chips"), q = document.getElementById("q");
+  let cur = "すべて";
+  cats.forEach(c => {
+    const b = el("button", { type: "button", id: "cat-" + c }, esc(c));
+    b.setAttribute("aria-pressed", c === cur ? "true" : "false");
+    b.addEventListener("click", () => { cur = c; chips.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); render(); });
+    chips.insertBefore(b, q);
+  });
+  q.addEventListener("input", render);
+  const box = document.getElementById("itemCards"), none = document.getElementById("noHit");
+  const cards = DATA.items.map(i => {
+    const c = el("article", { className: "card" });
+    c.appendChild(pic("items", i.id, i.name));
+    const t = el("div", { className: "txt" });
+    t.innerHTML = `<div class="top"><h3>${esc(i.name)}</h3><span class="tag">${esc(i.cat)}</span></div><p>${esc(i.desc)}</p><p class="get"><b>入手：</b>${i.get.map(esc).join("／")}</p>`;
+    c.appendChild(t);
+    return { i, c };
+  });
+  function render() {
+    const s = q.value.trim();
+    let n = 0;
+    box.textContent = "";
+    cards.forEach(({ i, c }) => {
+      if ((cur === "すべて" || i.cat === cur) && (!s || i.name.includes(s) || i.desc.includes(s))) { box.appendChild(c); n++; }
+    });
+    none.hidden = n > 0;
+  }
+  render();
+})();
+
+/* crafting recipes: [id or null, label, count] ; id -> images/items/<id>.png */
+const RECIPES = [
+  { group: "武器", list: [
+    { in: [["shard1", "剣の破片（柄）"], ["shard2", "剣の破片（刃）"], ["shard3", "剣の破片（鍔）"]], out: [["excalibur", "エクスカリバー"]],
+      note: "攻撃力20・5回攻撃すると壊れる。破片はチェストから1つずつ集める" },
+    { in: [["excalibur", "エクスカリバー"], ["boss_core", "ボスの核"]], out: [["excalibur_plus", "強化エクスカリバー"]],
+      note: "攻撃力26・10回攻撃すると壊れる。ボスの核はボスを倒すと必ず落ちる" },
+    { in: [["gunp1", "ガンパーツ（バレル）"], ["gunp2", "ガンパーツ（レシーバー）"], ["gunp3", "ガンパーツ（ストック）"]], out: [[null, "狙撃銃 Artemis"]],
+      note: "スコープ付きの強力な狙撃銃。ただし弾は1発だけで、撃ち切ると銃ごと消える切り札" },
+    { in: [["drgp1", "ドラグーンパーツ（弾頭）"], ["drgp2", "ドラグーンパーツ（推進器）"], ["drgp3", "ドラグーンパーツ（発射筒）"]], out: [["dragoon", "ドラグーン"]],
+      note: "視点の方向にミサイルを3発撃てる。直撃50ダメージ" },
+    { in: [[null, "M67 グレネード", 2]], out: [[null, "RGN グレネード"]],
+      note: "2個で1個。4個入れれば2個になる（余りは残る）" }
+  ]},
+  { group: "アイテム", list: [
+    { in: [["chaos_frag", "カオスの欠片", 3]], out: [["chaos", "混沌チケット"]],
+      note: "欠片はコモン・レアのチェストに入っている" },
+    { in: [["signal_part", "信号パーツ", 3]], out: [["flare", "発煙弾（救援要請）"]],
+      note: "試合中に使うと自分の真上から救援物資が落ちてくる（全員に位置が知らされる）" },
+    { in: [[null, "小さい回復（イブプロフェン・ワセリン・ゴールデンスター・アモキシシリン）", 3]], out: [["kizu", "すごいキズぐすり"]],
+      note: "種類を混ぜて合計3つでOK。最大体力の8割を回復できる" },
+    { in: [["key_jewelry", "普通の鍵（種類は自由）", 3]], out: [["key_backyard", "マークの刻まれた鍵"]],
+      note: "バックヤード・社員寮・VO部屋のどれかがランダムで手に入る" }
+  ]},
+  { group: "バックパック", list: [
+    { in: [["backpack", "バックパック（小）", 2]], out: [["bagm", "バックパック（中）"], ["backpack", "バックパック（小）"]],
+      note: "1つ上のサイズに育てつつ、片方は手元に残る" },
+    { in: [["bagm", "バックパック（中）", 2]], out: [["bagl", "バックパック（大）"], ["bagm", "バックパック（中）"]],
+      note: "大はロックされたマスを3つ解放する" }
+  ]},
+  { group: "防具・修理・弾", list: [
+    { in: [[null, "防具かヘルメット"], [null, "予備のプレート 1枚"]], out: [[null, "1段階上の防具"]],
+      note: "順番は下の「防具のランクアップの順番」を見てください" },
+    { in: [[null, "傷んだ装備（防具・道具など）"], [null, "鉄インゴット"]], out: [[null, "耐久値が満タン"]],
+      note: "1回の合成で1つ直る。オリジナルアイテムは対象外" },
+    { in: [[null, "銃"], [null, "その銃に使えない弾", 2]], out: [[null, "その銃の弾 1発"]],
+      note: "使えない弾2発でその銃の弾1発（1回で最大1スタック）。銃は残る。ボスが落とした銃・Artemis は不可" }
+  ]}
+];
+(function () {
+  const root = document.getElementById("recipeGroups");
+  const chip = ([id, label, n], out) => {
+    const c = el("span", { className: "ing" + (out ? " out" : "") + (id ? "" : " noimg") });
+    if (id) {
+      const img = el("img", { alt: "", loading: "lazy", src: `images/items/${id}.png` });
+      img.addEventListener("error", () => { img.remove(); c.classList.add("noimg"); });
+      c.appendChild(img);
+    }
+    c.appendChild(el("span", {}, esc(label) + (n ? ` <em>×${n}</em>` : "")));
+    return c;
+  };
+  RECIPES.forEach(g => {
+    const sec = el("div", { className: "rgroup" });
+    sec.appendChild(el("h3", {}, esc(g.group)));
+    const grid = el("div", { className: "recipes" });
+    g.list.forEach(r => {
+      const card = el("article", { className: "recipe" });
+      const eq = el("div", { className: "eq" });
+      r.in.forEach((x, i) => { if (i) eq.appendChild(el("span", { className: "op" }, "+")); eq.appendChild(chip(x, false)); });
+      eq.appendChild(el("span", { className: "arrow", ariaLabel: "できるもの" }, "→"));
+      r.out.forEach((x, i) => { if (i) eq.appendChild(el("span", { className: "op" }, "+")); eq.appendChild(chip(x, true)); });
+      card.appendChild(eq);
+      card.appendChild(el("p", {}, esc(r.note)));
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    root.appendChild(sec);
+  });
+})();
+
+const SCAVS = [
+  { id: "scav", name: "Scav", where: "ROUND 1 の間だけ、マップの各地に出現（全部で24体ほど）。ROUND 2 開始で撤退して消える",
+    gear: "体力40。Glock 17・M9A4・CZ75・M1911・P320・UZI・MP5・M870・UMP45・AKM のどれか1丁",
+    drop: "持っていた銃の弾（必ず）／その銃（25%・弾は空）／アタッチメント（30%）／回復アイテム（50%）／コモンのアイテム（25%）／普通の鍵（5%）",
+    tip: "近くにいると壁越しでも気づいて寄ってくる。弾が当たると少し追加ダメージがある" },
+  { id: "raider", name: "Scavレイダー", where: "Scav のうち4体に1体くらい。名前が金色",
+    gear: "体力80。6B47 ヘルメット＋JPC v2 を着ている。M4A1・AKM・HK416・SCAR-L・M1014・SKS・UMP45・Vector・P90 のどれか1丁",
+    drop: "持っていた銃の弾（多め・必ず）／その銃（40%）／アタッチメント（50%）／回復アイテム（70%）／レアのアイテム（35%）／普通の鍵（15%）",
+    tip: "普通の Scav より硬くて痛い。ヘルメットを撃ち抜ける弾で胴を狙うか、複数人で囲む" }
+];
+/* bosses */
+(function () {
+  const box = document.getElementById("bossCards");
+  const draw = (list, box) => list.forEach(b => {
+    const c = el("article", { className: "boss" });
+    c.appendChild(pic("bosses", b.id, b.name));
+    const t = el("div", { className: "txt" });
+    t.innerHTML = `<h3>${esc(b.name)}</h3><dl><dt>出現</dt><dd>${esc(b.where)}</dd><dt>装備</dt><dd>${esc(b.gear)}</dd><dt>ドロップ</dt><dd>${esc(b.drop)}</dd><dt>攻略</dt><dd>${esc(b.tip)}</dd></dl>`;
+    c.appendChild(t);
+    box.appendChild(c);
+  });
+  draw(BOSSES, box);
+  draw(SCAVS, document.getElementById("scavCards"));
+})();
+</script>
+
+</body>
+</html>
