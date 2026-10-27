@@ -426,7 +426,7 @@ footer { padding-block: 56px 40px; color: var(--muted); font-size: 13px; }
   <div class="sec-head">
     <p class="eyebrow">06 · 役職</p>
     <h2>10種類の役職</h2>
-    <p>試合開始時に全員へランダムで割り当てられます（同じ試合で重複なし）。主催者が<b>選択モード</b>にしたときは、試合の前にチャットの一覧から自分で選べます（チャットで <code>/trigger br_rsel</code> と打つと一覧が開く。かぶったら抽選）。どの役職も、いつも効いている<b>パッシブ</b>と、<kbd>F</kbd> で使う<b>スキル</b>の2つを持っています。スキルのクールダウンは画面上のゲージ（緑＝使える／赤＝残り秒数）で確認できます。ゲージには今の体力と最大体力も出ます。<kbd>Shift</kbd>＋<kbd>F</kbd> で説明が出ます（リズマーは曲の切り替え）。</p>
+    <p>試合開始時に全員へランダムで割り当てられます（同じ試合で重複なし）。主催者が<b>選択モード</b>にしたときは、試合の前にチャットの一覧から自分で選べます（チャットで <code>/trigger br_rsel</code> と打つと一覧が開く。同じ役職を何人で選んでもOK）。どの役職も、いつも効いている<b>パッシブ</b>と、<kbd>F</kbd> で使う<b>スキル</b>の2つを持っています。スキルのクールダウンは画面上のゲージ（緑＝使える／赤＝残り秒数）で確認できます。ゲージには今の体力と最大体力も出ます。<kbd>Shift</kbd>＋<kbd>F</kbd> で説明が出ます（リズマーは曲の切り替え）。</p>
   </div>
   <div class="cards" id="roleCards"></div>
 </section>
@@ -501,7 +501,7 @@ footer { padding-block: 56px 40px; color: var(--muted); font-size: 13px; }
    ギガファイル便のリンクと参加先をここに書くと、ページに反映されます。 */
 const SITE = {
   downloads: [
- { label: "Forge フォルダ", note: "minecraft battle フォルダ（設定込み）", url: "https://90.gigafile.nu/0130-b82d6a4f978f6f30da1b4da5f4bc64e21" },
+     { label: "Forge フォルダ", note: "minecraft battle フォルダ（設定込み）", url: "https://90.gigafile.nu/0130-b82d6a4f978f6f30da1b4da5f4bc64e21" },
     { label: "MOD", note: "mods フォルダに入れる .jar 一式", url: "https://90.gigafile.nu/0130-9538e23fae7ae8854a15e92aa9dce4b7" },
     { label: "銃パック", note: "tacz フォルダに入れる（解凍しない）", url: "https://90.gigafile.nu/0130-20bced0cfa40ac8ba278325ddabbb0df" },
     { label: "リソースパック", note: "resourcepacks フォルダに入れる（解凍しない）", url: "https://76.gigafile.nu/0204-de20f3ca829c72795d5e485e484eec5dc" },
@@ -1159,7 +1159,7 @@ const DATA = {
    "id": "riftpearl",
    "name": "リフトパール",
    "cat": "移動",
-   "desc": "使い方はエンダーパールと同じ（右クリックで投げて、落ちた所へテレポート）。リフトのパッシブで20秒ごとに1個たまり、3個までスタックする。1人3個まで",
+   "desc": "使い方はエンダーパールと同じ（右クリックで投げて、落ちた所へテレポート）。リフトのパッシブで20秒ごとに1個たまり、3個までスタックする。地面に落ちると消える（遺品チェストにも入らず、ほかの人は使えない）",
    "get": [
     "リフトのパッシブ「パール補給」"
    ]
